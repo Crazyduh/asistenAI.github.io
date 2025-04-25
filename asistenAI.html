@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Modern</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #202123;
+      font-family: 'Segoe UI', sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    #chatbox {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 16px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.6;
+      word-wrap: break-word;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+
+    .user {
+      background-color: #2d88ff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bot {
+      background-color: #343541;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    #inputArea {
+      display: flex;
+      padding: 16px;
+      background-color: #282c34;
+      border-top: 1px solid #444;
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 14px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      background-color: #3c3f4a;
+      color: #fff;
+      outline: none;
+    }
+
+    button {
+      margin-left: 12px;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: #10a37f;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0e8c6e;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="chatbox"></div>
+
+  <div id="inputArea">
+    <input type="text" id="userInput" placeholder="Tulis sesuatu..." onkeydown="if(event.key === 'Enter') sendMessage()">
+    <button onclick="sendMessage()">Kirim</button>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const message = input.value.trim();
+      if (!message) return;
+
+      addMessage(message, "user");
+      input.value = '';
+
+      const reply = getBotReply(message.toLowerCase());
+      setTimeout(() => {
+        addMessage(reply, "bot");
+      }, 400);
+    }
+
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.textContent = text;
+      chatbox.appendChild(msg);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    function getBotReply(msg) {
+      if (msg.includes("halo") || msg.includes("hai")) return "Halo! Ada yang bisa aku bantu?";
+      if (msg.includes("siapa kamu")) return "Aku chatbot offline dengan UI modern.";
+      if (msg.includes("apa itu ai")) return "AI adalah kecerdasan buatan—seperti aku yang menjawab ini!";
+      if (msg.includes("terima kasih")) return "Sama-sama, senang bisa bantu!";
+      if (msg.includes("nama kamu")) return "Nama saya jony.";
+      if (msg.includes("siapa penciptamu")) return "Saya dibuat oleh Muhammad Idrus.";
+      if (msg.includes("kamu bisa apa saja")) return "Saya masih dalam proses pengembangan.";
+      if (msg.includes("oke sampai jumpa")) return "semoga harimu menyenangkan.";
+      return "Hmm... aku belum paham itu. Coba pertanyaan lain ya!";
+    }
+  </script>
+
+</body></html>
